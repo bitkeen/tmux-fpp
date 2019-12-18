@@ -14,6 +14,6 @@ get_tmux_option() {
 readonly key="$(get_tmux_option "@fpp-key" "f")"
 
 tmux bind-key "$key" capture-pane -J \\\; \
-    save-buffer "${TMPDIR:-/tmp}/tmux-buffer" \\\; \
+    save-buffer "/tmp/tmux-buffer" \\\; \
     delete-buffer \\\; \
-    new-window -n fpp -c "#{pane_current_path}" "sh -c 'cat \"${TMPDIR:-/tmp}/tmux-buffer\" | fpp ; rm \"${TMPDIR:-/tmp}/tmux-buffer\"'"
+    new-window -n pe -c "#{pane_current_path}" 'sh -c "vim \"$(cat /tmp/tmux-buffer | path-extractor | fzf)\" ; rm /tmp/tmux-buffer"'
